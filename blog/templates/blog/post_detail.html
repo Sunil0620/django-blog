@@ -1,0 +1,45 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <article class="card">
+            <div class="card-body">
+                <h1 class="card-title">{{ object.title }}</h1>
+                <div class="mb-3">
+                    <small class="text-muted">
+                        By {{ object.author.username }} on {{ object.created|date:"F d, Y g:i A" }}
+                    </small>
+                </div>
+                <div class="card-text">
+                    {{ object.content|linebreaks }}
+                </div>
+                
+                {% if user == object.author %}
+                    <hr>
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'post-update' object.pk %}" class="btn btn-primary">Edit Post</a>
+                        <a href="{% url 'post-delete' object.pk %}" class="btn btn-danger">Delete Post</a>
+                    </div>
+                {% endif %}
+            </div>
+        </article>
+        
+        <div class="mt-3">
+            <a href="{% url 'post-list' %}" class="btn btn-secondary">← Back to Posts</a>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>About the Author</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>{{ object.author.username }}</strong></p>
+                <p class="text-muted">Blog contributor</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
